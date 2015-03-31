@@ -5,15 +5,15 @@ public class ShellSort {
 
     public static void Sort(){
         int step = Array.getInstance().getSize()/2;
-        while(step!=1){
+        while(step > 0){  //уменьшаем шаг, пока не   дойдём до единицы
             SortTread[] myThready = new SortTread[step];
             for (int i = 0; i < myThready.length; i++) {
-                myThready[i] = new SortTread(step);
+                myThready[i] = new SortTread(i, step);
                 myThready[i].start();
-            }
+            }  //создаём нити, сортирующие массив с шангом step
             for (SortTread aMyThready : myThready) {
                 try {
-                    aMyThready.join();
+                    aMyThready.join();  //ждём завершения всех сортировок
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -21,5 +21,8 @@ public class ShellSort {
             step = step/2;
         }
     }
+
+
+
 
 }

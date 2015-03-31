@@ -3,25 +3,29 @@
  */
 public class SortTread extends Thread {
 
-    public static int step;
-    public SortTread(int step) {
-        SortTread.step = step;
+    public int step;
+    public  int start;
+
+    public SortTread(int start, int step){
+        this.start = start;
+        this.step = step;
     }
+
     @Override
     public void run() {
         sort_shell(step);
     }
-    void sort_shell( int step){
-        step = step / 2;
-        for (int i = 0; i < (Array.getInstance().getSize() - step); i++)
+
+    private void sort_shell( int step){
+        for (int i = start; i < (Array.getInstance().getSize() - step); i+=step)
         {
             int j = i;
-            while (j >= 0 && Array.getInstance().getArr()[i] > Array.getInstance().getArr()[j + step])
+            while (j >= 0 && Array.getInstance().getArr()[j] > Array.getInstance().getArr()[j + step])
             {
                 int temp = Array.getInstance().getArr()[j];
                 Array.getInstance().setElement(Array.getInstance().getArr()[j + step], j);
                 Array.getInstance().setElement(temp, j + step);
-                j--;
+                j-=step;
             }
         }
     }
